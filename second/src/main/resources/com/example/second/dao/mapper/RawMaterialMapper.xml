@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.second.dao.RawMaterialDao">
+    <resultMap id="BaseResultMap" type="com.example.second.entity.RawMaterial">
+        <result column="id" property="id" jdbcType="INTEGER"/>
+        <result column="number" property="number" jdbcType="CHAR"/>
+        <result column="type" property="type" jdbcType="VARCHAR"/>
+        <result column="date" property="date" jdbcType="DATE"/>
+        <result column="parameter" property="parameter" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="CHAR"/>
+        <result column="describe" property="describe" jdbcType="VARCHAR"/>
+        <result column="number_fac" property="number_fac" jdbcType="CHAR"/>
+        <result column="manufacturer" property="manufacturer" jdbcType="VARCHAR"/>
+        <result column="date_fac" property="date_fac" jdbcType="DATE"/>
+        <result column="varieties" property="varieties" jdbcType="VARCHAR"/>
+        <result column="level" property="level" jdbcType="CHAR"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="result" property="result" jdbcType="BIT"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, number, type, date, parameter, name, status, describe, number_fac, manufacturer, date_fac, varieties, level, remark, result
+    </sql>
+
+    <select id="findAllRawMaterials" resultType="com.example.second.entity.RawMaterial">
+        select * from rawmaterial
+    </select>
+
+    <select id="findRawMaterial" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select * from rawmaterial where number = #{number,jdbcType=CHAR}
+    </select>
+
+    <select id="findRawMaterial_date" parameterType="java.util.Date" resultMap="BaseResultMap">
+        select * from rawmaterial where date = #{date,jdbcType=DATE}
+    </select>
+
+    <select id="findRawMaterial_status" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select * from rawmaterial where status = #{status,jdbcType=CHAR}
+    </select>
+
+    <select id="findRawMaterial_id" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select * from rawmaterial where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <delete id="deleteRawMaterialsByIds">
+        delete from rawmaterial where id in
+        <foreach collection="ids" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="getCountRawMaterials" resultType="java.lang.Integer">
+        select count(id) as count from rawmaterial
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from rawmaterial
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <delete id="deleteRawMaterialByNum" parameterType="java.lang.Long">
+        delete from rawmaterial
+        where number = #{number,jdbcType=INTEGER}
+    </delete>
+
+<!--    <insert id="insert" parameterType="com.example.second.entity.RawMaterial">-->
+<!--        insert into rawmaterial (id, number, type, date, parameter, name, status, describe, number_fac, manufacturer, date_fac, varieties, level, remark)-->
+<!--        values ({id,jdbcType=INTEGER}, {number,jdbcType=CHAR}, {type,jdbcType=VARCHAR}, {date,jdbcType=DATE},-->
+<!--                {parameter,jdbcType=VARCHAR}, {name,jdbcType=VARCHAR}, {status,jdbcType=CHAR}, {describe,jdbcType=VARCHAR},-->
+<!--                {number_fac,jdbcType=CHAR}, {manufacturer,jdbcType=VARCHAR}, {date_fac,jdbcType=DATE }, {varieties,jdbcType=VARCHAR},-->
+<!--                {level,jdbcType=VARCHAR}, {remark,jdbcType=VARCHAR})-->
+<!--    </insert>-->
+    <insert id="addRawMaterial" parameterType="com.example.second.entity.RawMaterial">
+        insert into rawmaterial
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="number != null">
+                number,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="date != null">
+                date,
+            </if>
+            <if test="parameter != null">
+                parameter,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+<!--            <if test="describe != null">-->
+<!--                describe,-->
+<!--            </if>-->
+            <if test="number_fac != null">
+                number_fac,
+            </if>
+            <if test="manufacturer != null">
+                manufacturer,
+            </if>
+            <if test="date_fac != null">
+                date_fac,
+            </if>
+            <if test="varieties != null">
+                varieties,
+            </if>
+            <if test="level != null">
+                level,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+            <if test="result != null">
+                result,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="number != null">
+                #{number,jdbcType=CHAR},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="date != null">
+                #{date,jdbcType=DATE},
+            </if>
+            <if test="parameter != null">
+                #{parameter,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=CHAR},
+            </if>
+<!--            <if test="describe != null">-->
+<!--                #{describe,jdbcType=VARCHAR},-->
+<!--            </if>-->
+            <if test="number_fac != null">
+                #{number_fac,jdbcType=CHAR},
+            </if>
+            <if test="manufacturer != null">
+                #{manufacturer,jdbcType=VARCHAR},
+            </if>
+            <if test="date_fac != null">
+                #{date_fac,jdbcType=DATE},
+            </if>
+            <if test="varieties != null">
+                #{varieties,jdbcType=VARCHAR},
+            </if>
+            <if test="level != null">
+                #{level,jdbcType=CHAR},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="result != null">
+                #{result,jdbcType=BIT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateRawMaterial" parameterType="com.example.second.entity.RawMaterial">
+        update rawmaterial
+        <set>
+            <if test="number != null">
+                number = #{number,jdbcType=CHAR},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="date != null">
+                date = #{date,jdbcType=DATE},
+            </if>
+            <if test="parameter != null">
+                parameter = #{parameter,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=CHAR},
+            </if>
+<!--            <if test="describe != null">-->
+<!--                describe = #{describe,jdbcType=VARCHAR},-->
+<!--            </if>-->
+            <if test="number_fac != null">
+                number_fac = #{number_fac,jdbcType=CHAR},
+            </if>
+            <if test="manufacturer != null">
+                manufacturer = #{manufacturer,jdbcType=VARCHAR},
+            </if>
+            <if test="date_fac != null">
+                date_fac = #{date_fac,jdbcType=DATE},
+            </if>
+            <if test="varieties != null">
+                varieties = #{varieties,jdbcType=VARCHAR},
+            </if>
+            <if test="level != null">
+                level = #{level,jdbcType=CHAR},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="result != null">
+                result = #{result,jdbcType=BIT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+<!--    <update id="updateByPrimaryKey" parameterType="com.example.second.entity.RawMaterial">-->
+<!--        update rawmaterial-->
+<!--        set name = #{name,jdbcType=VARCHAR},-->
+<!--            age = #{age,jdbcType=INTEGER},-->
+<!--            sex = #{sex,jdbcType=VARCHAR},-->
+<!--            school = #{school,jdbcType=VARCHAR},-->
+<!--            education = #{education,jdbcType=VARCHAR},-->
+<!--            phone = #{phone,jdbcType=CHAR},-->
+<!--            location = #{location,jdbcType=VARCHAR},-->
+<!--            working = #{working,jdbcType=BIT},-->
+<!--            birth = #{birth,jdbcType=DATE},-->
+<!--            major = #{major,jdbcType=VARCHAR},-->
+<!--            e_mail = #{e_mail,jdbcType=VARCHAR},-->
+<!--            nation = #{nation,jdbcType=VARCHAR},-->
+<!--            native_place = #{native_place,jdbcType=VARCHAR},-->
+<!--            technical_post = #{technical_post,jdbcType=VARCHAR},-->
+<!--            english_level = #{english_level,jdbcType=VARCHAR},-->
+<!--            computer_level = #{computer_level,jdbcType=VARCHAR},-->
+<!--            hobby = #{hobby,jdbcType=VARCHAR},-->
+<!--            motto = #{motto,jdbcType=VARCHAR},-->
+<!--            id = #{id,jdbcType=VARCHAR}-->
+<!--        where uid = #{uid,jdbcType=BIGINT}-->
+<!--    </update>-->
+</mapper>
